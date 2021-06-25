@@ -18,22 +18,6 @@ class CatGame extends Phaser.Scene {
     this.oldAnimation = '';
   }
 
-
-  init ()
-  {
-      //  Inject our CSS
-      const element = document.createElement('style');
-  
-      document.head.appendChild(element);
-  
-      const sheet = element.sheet;
-  
-      const styles = '@font-face { font-family: "bebasNeue"; src: url("assets/BebasNeue-Regular.ttf") format("truetype"); }\n';
-  
-      sheet.insertRule(styles, 0);
- 
-  }
-
   preload() {
     this.gameWidth = this.screenSize * this.screenWidth;
     this.load.image("bg", bgImage);
@@ -48,7 +32,7 @@ class CatGame extends Phaser.Scene {
   }
 
   create() {
-    this.cameras.main.setBounds(0, 0, this.gameWidth, 176);
+    this.cameras.main.setBounds(0, 0, this.screenWidth, 176);
 
     for (let x = 0; x < this.screenSize; x++) {
       this.add.image(552 * x, 0, "bg").setOrigin(0);
@@ -115,17 +99,19 @@ class CatGame extends Phaser.Scene {
         this.showMessage();
         setTimeout(()=>{
           this.hideMessage();
-        }, 1000);
+        }, 3000);
     }, null, this);
     
     this.message = this.add.text(150, 200, "Gefeliciteerd uren code opgepakt!", { font: "30px Arial", fill: "#ff0044",align: "center" }).setVisible(false);
+    this.message.setFontFamily("BebasNeueRegular");
     this.message.setStroke('#000', 16);
 
     
 
     // lives left
     this.lives = 8;
-    this.livesText = this.add.text(16, 16, `lives: ${this.lives}`, { fontSize: '32px', fontFamily: 'bebasNeue', fill: '#000' });
+    this.livesText = this.add.text(16, 16, `lives: ${this.lives}`, { fontSize: '32px', fill: '#000', fontFamily: "BebasNeueRegular" });
+    this.livesText.setFontFamily("BebasNeueRegular");
     this.removeLife = () => {
         if (!this.hurt) {
         console.log("OUCH");
