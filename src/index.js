@@ -59,10 +59,8 @@ class CatGame extends Phaser.Scene {
         // star cat moving 
         this.moveCam = true;
         console.log("player x = ", this.player.x, " | gamewidth = ", this.gameWidth)
-
-        if (this.player.body.touching.down) {
-            this.player.setVelocityY(-250);
-        }
+        this.player.setVelocityY(-250);
+ 
     });
 
     if (cursors.left.isDown)
