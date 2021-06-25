@@ -50,6 +50,7 @@ class CatGame extends Phaser.Scene {
   }
 
   update() {
+    const cursors = this.input.keyboard.createCursorKeys();
 
     if (this.moveCam) {
         this.player.setVelocityX(80);
@@ -64,8 +65,26 @@ class CatGame extends Phaser.Scene {
         }
     });
 
+    if (cursors.left.isDown)
+        {
+            this.player.setVelocityX(0);
+            this.player.setVelocityX(-160);
+        }
+        else if (cursors.right.isDown)
+        {
+            this.player.setVelocityX(0);
+            this.player.setVelocityX(160);
+        }
+        else if (cursors.up.isDown)
+        {
+            this.player.setVelocityY(0);
+            this.player.setVelocityY(-160);
+        }
+        else {
+            // this.player.setVelocity(0);
+        }
+     }
   }
-}
 
 const config = {
   type: Phaser.AUTO,
