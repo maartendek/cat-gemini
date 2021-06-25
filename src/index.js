@@ -9,10 +9,13 @@ class CatGame extends Phaser.Scene {
   constructor() {
     super();
     this.moveCam = false;
-    this.screenWidth = 552;
+    this.screenWidth = 736;
+    this.screenHeight = 414;
     this.screenSize = 4;
     this.player;
     this.platforms;
+    this.background;
+    this.message;
   }
 
   preload() {
@@ -25,11 +28,13 @@ class CatGame extends Phaser.Scene {
   }
 
   create() {
+
     this.cameras.main.setBounds(0, 0, this.gameWidth, 176);
 
-    for (let x = 0; x < this.screenSize; x++) {
-      this.add.image(552 * x, 0, "bg").setOrigin(0);
-    }
+  
+    this.background = this.add.tileSprite(0, 0, this.screenWidth, this.screenHeight, "bg")
+      .setOrigin(0)
+      .setScrollFactor(0,1);
 
     this.platforms = this.physics.add.staticGroup();
     this.platforms.create(400, 250, 'platform');
@@ -58,8 +63,14 @@ class CatGame extends Phaser.Scene {
     this.physics.add.collider(this.enemies, this.player, () => {
         console.log("ouch!")
     });
+<<<<<<< HEAD
 
     // clarity code powerups
+=======
+    // this.enemy = this.physics.add.sprite(200, 150, 'cat-sit');
+    // this.enemy.setCollideWorldBounds(true);
+    // this.physics.add.collider(this.enemy, this.platforms);
+>>>>>>> 64804f612d87686e9c7d38f493ab3732a74af04e
     this.clarityCodes = this.physics.add.group({ allowGravity: false });
     this.clarityCodes.add(new ClarityCode(this, 350, 100, 100, 100, 0.005), true);
     this.clarityCodes.add(new ClarityCode(this, 600, 200, 40, 100, 0.005), true);
@@ -69,9 +80,21 @@ class CatGame extends Phaser.Scene {
     this.physics.add.overlap(this.player, this.clarityCodes, function(player, code) {
         code.disableBody(true, true);
     }, null, this);
+    
+    this.message = this.add.text(150, 200, "Gefeliciteerd uren code opgepakt!", { font: "30px Arial", fill: "#ff0044",align: "center" }).setVisible(false);
+    this.message.setStroke('#000', 16);
+  }
+  
+  showMessage() {
+    this.message.setVisible(true);
+  }
+  
+  hideMessage() {
+    this.message.setVisible(false);  
   }
 
   update() {
+    this.background.setTilePosition(this.cameras.main.scrollX);
     const cursors = this.input.keyboard.createCursorKeys();
 
     // this.enemies.children.each(enemy => {
@@ -99,20 +122,22 @@ class CatGame extends Phaser.Scene {
         this.moveCam = true;
         console.log("player x = ", this.player.x, " | gamewidth = ", this.gameWidth)
         this.player.setVelocityY(-250);
- 
+        
     });
 
     if (cursors.left.isDown)
         {
             this.player.setVelocityX(0);
             this.player.setVelocityX(-160);
+            this.showMessage();
         }
-        else if (cursors.right.isDown)
+    else if (cursors.right.isDown)
         {
             this.player.setVelocityX(0);
             this.player.setVelocityX(160);
+            this.hideMessage();
         }
-        else if (cursors.up.isDown)
+    else if (cursors.up.isDown)
         {
             this.player.setVelocityY(0);
             this.player.setVelocityY(-160);
@@ -121,6 +146,8 @@ class CatGame extends Phaser.Scene {
             // this.player.setVelocity(0);
         }
      }
+
+
   }
 
 const config = {
