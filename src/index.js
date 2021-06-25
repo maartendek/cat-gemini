@@ -61,25 +61,9 @@ class CatGame extends Phaser.Scene {
     this.physics.add.collider(this.enemies, this.player, () => {
         console.log("ouch!")
     });
-<<<<<<< HEAD
-    
     // this.enemy = this.physics.add.sprite(200, 150, 'cat-sit');
     // this.enemy.setCollideWorldBounds(true);
     // this.physics.add.collider(this.enemy, this.platforms);
-    
-    this.message = this.add.text(150, 200, "Gefeliciteerd uren code opgepakt!", { font: "30px Arial", fill: "#ff0044", align: "center" }).setVisible(false);
-    this.message.setStroke('#000', 16);
-  }
-  
-  showMessage() {
-    this.message.setVisible(true);
-  }
-  
-  hideMessage() {
-    this.message.setVisible(false);
-=======
-
-
     this.clarityCodes = this.physics.add.group({ allowGravity: false });
 
     //  x, y = center of the path
@@ -94,7 +78,17 @@ class CatGame extends Phaser.Scene {
     this.physics.add.overlap(this.player, this.clarityCodes, function(player, code) {
         code.disableBody(true, true);
     }, null, this);
->>>>>>> c143acabdedad59b6822ade5058f6b5b3c1f84ba
+    
+    this.message = this.add.text(150, 200, "Gefeliciteerd uren code opgepakt!", { font: "30px Arial", fill: "#ff0044",align: "center" }).setVisible(false);
+    this.message.setStroke('#000', 16);
+  }
+  
+  showMessage() {
+    this.message.setVisible(true);
+  }
+  
+  hideMessage() {
+    this.message.setVisible(false);  
   }
 
   update() {
