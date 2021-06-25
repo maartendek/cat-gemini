@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 import bgImage from "./assets/bg.png";
-import groundImage from "./assets/empty.png";
+import groundImage from "./assets/ground.png";
 import catSitImage from "./assets/cat-black-sit.png";
 import catWalkImage from "./assets/cat-black-walk.png";
 
@@ -28,17 +28,17 @@ class CatGame extends Phaser.Scene {
     }
 
     this.platforms = this.physics.add.staticGroup();
-    this.platforms.create(0, 350, 'ground').refreshBody();
+    this.platforms.create(100, 403, 'ground').refreshBody();
 
     this.cursors = this.input.keyboard.createCursorKeys();
 
-    this.player = this.physics.add.sprite(50, 100, 'cat-walk').setScale(0.5);
+    this.player = this.physics.add.sprite(100, 150, 'cat-walk');
     this.player.setBounce(0.2);
     this.player.setCollideWorldBounds(true);
     this.physics.add.collider(this.player, this.platforms);
 
     this.cameras.main.startFollow(this.player, true);
-    this.cameras.main.setZoom(2);
+
   }
 
   update() {
@@ -47,17 +47,17 @@ class CatGame extends Phaser.Scene {
     //this.player.setVelocity(0);
 
     if (this.moveCam) {
-      if (this.cursors.left.isDown) {
-        cam.scrollX -= 4;
-      } else if (this.cursors.right.isDown) {
-        cam.scrollX += 4;
-      }
+    //   if (this.cursors.left.isDown) {
+    //     cam.scrollX -= 4;
+    //   } else if (this.cursors.right.isDown) {
+    //     cam.scrollX += 4;
+    //   }
 
-      if (this.cursors.up.isDown) {
-        cam.scrollY -= 4;
-      } else if (this.cursors.down.isDown) {
-        cam.scrollY += 4;
-      }
+    //   if (this.cursors.up.isDown) {
+    //     cam.scrollY -= 4;
+    //   } else if (this.cursors.down.isDown) {
+    //     cam.scrollY += 4;
+    //   }
     } else {
       this.player.setInteractive().on("pointerdown", () => {
         if (this.player.body.touching.down) {
