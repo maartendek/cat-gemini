@@ -28,7 +28,9 @@ class CatGame extends Phaser.Scene {
     }
 
     this.platforms = this.physics.add.staticGroup();
-    this.platforms.create(100, 403, 'ground').refreshBody();
+    for (let x = 0; x < this.screenSize; x++) {
+        this.platforms.create(552 * x, 393, 'ground').refreshBody();
+    }
 
     this.cursors = this.input.keyboard.createCursorKeys();
 
@@ -44,27 +46,18 @@ class CatGame extends Phaser.Scene {
   update() {
     const cam = this.cameras.main;
 
-    //this.player.setVelocity(0);
-
     if (this.moveCam) {
-    //   if (this.cursors.left.isDown) {
-    //     cam.scrollX -= 4;
-    //   } else if (this.cursors.right.isDown) {
-    //     cam.scrollX += 4;
-    //   }
-
-    //   if (this.cursors.up.isDown) {
-    //     cam.scrollY -= 4;
-    //   } else if (this.cursors.down.isDown) {
-    //     cam.scrollY += 4;
-    //   }
-    } else {
-      this.player.setInteractive().on("pointerdown", () => {
-        if (this.player.body.touching.down) {
-          this.player.setVelocityY(-250);
-        }
-      });
+        this.player.setVelocityX(80);
     }
+    this.player.setInteractive().on("pointerdown", () => {
+        // star cat moving 
+        this.moveCam = true;
+        
+        if (this.player.body.touching.down) {
+            this.player.setVelocityY(-250);
+        }
+    });
+
   }
 }
 
