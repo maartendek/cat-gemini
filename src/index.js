@@ -49,6 +49,7 @@ class CatGame extends Phaser.Scene {
       frameRate: 8,
       repeat: -1
     });
+
     this.anims.create({
       key: 'jump',
       frames: this.anims.generateFrameNumbers('cat-walk', { frames: [ 0, 1, 2, 3 ] }),
@@ -105,10 +106,10 @@ class CatGame extends Phaser.Scene {
   setAnimation(animation) {
     if (this.oldAnimation === animation) return;
     this.oldAnimation = animation;
-
-    if(!this.animating){
+    if(animation === 'stop'){
+      this.player.stop();
+    } else {
       this.player.play(animation);
-      this.animating = true;
     }
   }
 
@@ -148,7 +149,8 @@ class CatGame extends Phaser.Scene {
             this.setAnimation('jump');
         }
         else {
-            // this.player.setVelocity(0);
+          this.player.setVelocityX(0);
+          this.setAnimation('stop');
         }
      }
   }
