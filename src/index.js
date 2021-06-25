@@ -53,15 +53,22 @@ class CatGame extends Phaser.Scene {
     this.enemies.create(200, 150, 'cat-sit');
     this.enemies.create(200, 20, 'cat-sit');
 
+    this.physics.add.collider(this.enemies, this.player, () => {
+        console.log("ouch!")
+    });
+
     // this.enemy = this.physics.add.sprite(200, 150, 'cat-sit');
     // this.enemy.setCollideWorldBounds(true);
     // this.physics.add.collider(this.enemy, this.platforms);
+
+ 
   }
 
   update() {
     const cursors = this.input.keyboard.createCursorKeys();
 
     this.enemies.children.each(enemy => {
+        
         // if player to left of enemy AND enemy moving to right (or not moving)
         if (550 <= enemy.x && enemy.body.velocity.x >= 0) {
             // move enemy to left
