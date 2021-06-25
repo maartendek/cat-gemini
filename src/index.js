@@ -2,7 +2,7 @@ import Phaser from "phaser";
 import bgImage from "./assets/bg.png";
 import groundImage from "./assets/ground.png";
 import catSitImage from "./assets/cat-black-sit.png";
-import catWalkImage from "./assets/cat-black-walk.png";
+import catWalkImage from "./assets/cat-black-walk-sprite-2.png";
 import platformImage from "./assets/platform.png";
 import clarityImage from "./assets/clarity_k52.png";
 
@@ -15,6 +15,7 @@ class CatGame extends Phaser.Scene {
     this.screenSize = 4;
     this.player;
     this.platforms;
+    this.oldAnimation = '';
   }
 
   preload() {
@@ -43,6 +44,18 @@ class CatGame extends Phaser.Scene {
 
     this.cursors = this.input.keyboard.createCursorKeys();
 
+    this.anims.create({
+      key: 'walk',
+      frames: this.anims.generateFrameNumbers('cat-walk', { frames: [ 0, 1, 2, 3 ] }),
+      frameRate: 8,
+      repeat: -1
+    });
+    this.anims.create({
+      key: 'jump',
+      frames: this.anims.generateFrameNumbers('cat-walk', { frames: [ 0, 1, 2, 3 ] }),
+      frameRate: 0,
+      repeat: -1
+    });
     this.player = this.physics.add.sprite(100, 150, 'cat-walk').setScale(0.5);
     this.player.setBounce(0.2);
     this.player.setCollideWorldBounds(true);
@@ -79,15 +92,7 @@ class CatGame extends Phaser.Scene {
     this.message = this.add.text(150, 200, "Gefeliciteerd uren code opgepakt!", { font: "30px Arial", fill: "#ff0044",align: "center" }).setVisible(false);
     this.message.setStroke('#000', 16);
 
-    this.add.image(0, 0, 'cat-walk', '__BASE').setOrigin(0, 0);
-    this.anims.create({
-      key: 'walk',
-      frames: this.anims.generateFrameNumbers('cat-walk', { frames: [ 0, 1, 2, 3 ] }),
-      frameRate: 8,
-      repeat: -1
-    });
-    const cat = this.add.sprite(600, 370);
-    cat.play('walk');
+    
 
     // lives left
     this.livesText = this.add.text(16, 16, `lives: ${this.lives}`, { fontSize: '32px', fill: '#000' });
@@ -99,6 +104,16 @@ class CatGame extends Phaser.Scene {
   
   hideMessage() {
     this.message.setVisible(false);  
+  }
+
+  setAnimation(animation) {
+    if (this.oldAnimation === animation) return;
+    this.oldAnimation = animation;
+
+    if(!this.animating){
+      this.player.play(animation);
+      this.animating = true;
+    }
   }
 
   update() {
@@ -121,17 +136,20 @@ class CatGame extends Phaser.Scene {
             this.player.setVelocityX(0);
             this.player.setVelocityX(-160);
             this.player.setScale(-0.5, 0.5);
+            this.setAnimation('walk');
         }
-        else if (cursors.right.isDown)
+    else if (cursors.right.isDown)
         {
             this.player.setVelocityX(0);
             this.player.setVelocityX(160);
             this.player.setScale(0.5, 0.5);
+            this.setAnimation('walk');
         }
         else if (cursors.up.isDown)
         {
             this.player.setVelocityY(0);
             this.player.setVelocityY(-160);
+            this.setAnimation('jump');
         }
         else {
             // this.player.setVelocity(0);
