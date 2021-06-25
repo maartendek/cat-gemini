@@ -3,6 +3,7 @@ import bgImage from "./assets/bg.png";
 import groundImage from "./assets/empty.png";
 import catSitImage from "./assets/cat-black-sit.png";
 import catWalkImage from "./assets/cat-black-walk.png";
+import platformImage from "./assets/platform.png";
 
 class CatGame extends Phaser.Scene {
   constructor() {
@@ -18,6 +19,7 @@ class CatGame extends Phaser.Scene {
     this.load.spritesheet("cat-walk", catWalkImage, { frameWidth: 100, frameHeight: 100 });
     this.load.image("cat-sit", catSitImage);
     this.load.image('ground', groundImage);
+    this.load.image('platform', platformImage);
   }
 
   create() {
@@ -28,7 +30,9 @@ class CatGame extends Phaser.Scene {
     }
 
     this.platforms = this.physics.add.staticGroup();
-    this.platforms.create(0, 350, 'ground').refreshBody();
+    this.platforms.create(400, 250, 'platform');
+    this.platforms.create(400, 100, 'platform');
+    this.platforms.create(300, 400, 'platform').refreshBody();
 
     this.cursors = this.input.keyboard.createCursorKeys();
 
@@ -38,13 +42,15 @@ class CatGame extends Phaser.Scene {
     this.physics.add.collider(this.player, this.platforms);
 
     this.cameras.main.startFollow(this.player, true);
-    this.cameras.main.setZoom(2);
-  }
+    this.cameras.main.setZoom(1);
 
-  update() {
+    }
+
+    update() {
     const cam = this.cameras.main;
-
-    //this.player.setVelocity(0);
+    const cursors = this.input.keyboard.createCursorKeys();
+    
+    // this.player.setVelocity(0);
 
     if (this.moveCam) {
       if (this.cursors.left.isDown) {
@@ -64,8 +70,31 @@ class CatGame extends Phaser.Scene {
           this.player.setVelocityY(-250);
         }
       });
+      this.player.setInteractive().on("keydown", () => {
+        if (this.player.body.touching.down) {
+          this.player.setVelocityY(-250);
+        }
+      });
     }
-  }
+    if (cursors.left.isDown)
+        {
+            this.player.setVelocityX(0);
+            this.player.setVelocityX(-160);
+        }
+        else if (cursors.right.isDown)
+        {
+            this.player.setVelocityX(0);
+            this.player.setVelocityX(160);
+        }
+        else if (cursors.up.isDown)
+        {
+            this.player.setVelocityY(0);
+            this.player.setVelocityY(-160);
+        }
+        else {
+            // this.player.setVelocity(0);
+        }
+     }
 }
 
 const config = {
