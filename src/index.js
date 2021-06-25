@@ -42,7 +42,7 @@ class CatGame extends Phaser.Scene {
 
     this.cursors = this.input.keyboard.createCursorKeys();
 
-    this.player = this.physics.add.sprite(100, 150, 'cat-walk');
+    this.player = this.physics.add.sprite(100, 150, 'cat-walk').setScale(0.5);
     this.player.setBounce(0.2);
     this.player.setCollideWorldBounds(true);
     this.physics.add.collider(this.player, this.platforms);
@@ -184,7 +184,7 @@ var Enemy = new Phaser.Class({
     Extends: Phaser.Physics.Arcade.Sprite,
     initialize: function ClarityCode (scene, x, y, speed) {
         Phaser.Physics.Arcade.Sprite.call(this, scene, x, y, 'cat-sit');
-
+        this.scale = 0.5;
     },
     preUpdate: function (t, d) {
          // if player to left of enemy AND enemy moving to right (or not moving)
