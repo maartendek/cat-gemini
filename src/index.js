@@ -33,7 +33,7 @@ class CatGame extends Phaser.Scene {
 
     this.platforms = this.physics.add.staticGroup();
     this.platforms.create(400, 250, 'platform');
-    this.platforms.create(400, 100, 'platform');
+    this.platforms.create(400, 120, 'platform');
     for (let x = 0; x < this.screenSize; x++) {
         this.platforms.create(552 * x, 393, 'ground').refreshBody();
     }
@@ -50,8 +50,8 @@ class CatGame extends Phaser.Scene {
     this.enemies = this.physics.add.group();
     this.physics.add.collider(this.enemies, this.platforms);
 
-    this.enemies.create(200, 150, 'cat-sit');
-    this.enemies.create(200, 20, 'cat-sit');
+    this.enemies.create(550, 20, 'cat-sit');
+    this.enemies.create(200, 250, 'cat-sit');
 
     this.physics.add.collider(this.enemies, this.player, () => {
         console.log("ouch!")
