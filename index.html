@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <link rel="manifest" href="/manifest.webmanifest" crossorigin="use-credentials">
+    <link rel="preload" as="font" href="BebasNeue-Regular.ttf" type="font/ttf" />
     <script>
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('./service-worker.js')
@@ -16,6 +17,10 @@
       }
     </script>
     <style>
+      @font-face {
+        font-family: BebasNeueRegular;
+        src: url('BebasNeue-Regular.ttf');
+      }
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -76,6 +81,7 @@ table {
   color: #135677;
   display: block;
   text-align: center;
+  font-family: 'BebasNeueRegular';
 }
 .death-screen {
   position: absolute;
@@ -89,12 +95,10 @@ table {
   margin: 100px auto;
   display: block;
   text-align: center;
-
+  font-family: 'BebasNeueRegular';
 }
-@font-face {
-  font-family: 'BebasNeue-Regular';
-  src: url('./src/assets/BebasNeue-Regular.ttf');
-} 
+
+
     </style>
   </head>
   <body>

@@ -23,7 +23,7 @@ module.exports = {
       {
         test: /\.(gif|png|jpe?g|svg|xml|ttf)$/i,
         use: "file-loader"
-      }
+      },
     ]
   },
   plugins: [
@@ -40,7 +40,8 @@ module.exports = {
     new CopyWebpackPlugin({
         patterns: [
             { from: 'pwa' },
-            { from: 'manifest.webmanifest' }
+            { from: 'manifest.webmanifest' },
+            { from: 'src/assets/BebasNeue-Regular.ttf' }
         ]
     })
   ]
