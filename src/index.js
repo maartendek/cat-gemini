@@ -38,7 +38,7 @@ class CatGame extends Phaser.Scene {
 
     this.platforms = this.physics.add.staticGroup();
     this.platforms.create(400, 250, 'platform');
-    this.platforms.create(400, 100, 'platform');
+    this.platforms.create(400, 120, 'platform');
     for (let x = 0; x < this.screenSize; x++) {
         this.platforms.create(552 * x, 393, 'ground').refreshBody();
     }
@@ -55,12 +55,13 @@ class CatGame extends Phaser.Scene {
     this.enemies = this.physics.add.group();
     this.physics.add.collider(this.enemies, this.platforms);
 
-    this.enemies.create(200, 150, 'cat-sit');
-    this.enemies.create(200, 20, 'cat-sit');
+    this.enemies.create(550, 20, 'cat-sit');
+    this.enemies.create(200, 250, 'cat-sit');
 
     this.physics.add.collider(this.enemies, this.player, () => {
         console.log("ouch!")
     });
+<<<<<<< HEAD
     
     // this.enemy = this.physics.add.sprite(200, 150, 'cat-sit');
     // this.enemy.setCollideWorldBounds(true);
@@ -76,6 +77,24 @@ class CatGame extends Phaser.Scene {
   
   hideMessage() {
     this.message.setVisible(false);
+=======
+
+
+    this.clarityCodes = this.physics.add.group({ allowGravity: false });
+
+    //  x, y = center of the path
+    //  width, height = size of the elliptical path
+    //  speed = speed the sprite moves along the path per frame
+
+    this.clarityCodes.add(new ClarityCode(this, 350, 100, 100, 100, 0.005), true);
+    this.clarityCodes.add(new ClarityCode(this, 600, 200, 40, 100, 0.005), true);
+    this.clarityCodes.add(new ClarityCode(this, 700, 200, 40, 100, -0.005), true);
+    this.clarityCodes.add(new ClarityCode(this, 800, 200, 40, 100, 0.01), true);
+
+    this.physics.add.overlap(this.player, this.clarityCodes, function(player, code) {
+        code.disableBody(true, true);
+    }, null, this);
+>>>>>>> c143acabdedad59b6822ade5058f6b5b3c1f84ba
   }
 
   update() {
@@ -157,3 +176,38 @@ const config = {
 var moveCam = false;
 
 const game = new Phaser.Game(config);
+
+
+var ClarityCode = new Phaser.Class({
+
+    Extends: Phaser.Physics.Arcade.Sprite,
+
+    initialize:
+
+    function ClarityCode (scene, x, y, width, height, speed)
+    {
+        Phaser.Physics.Arcade.Sprite.call(this, scene, x, y, 'cat-sit');
+
+        //  This is the path the sprite will follow
+        this.path = new Phaser.Curves.Ellipse(x, y, width, height);
+        this.pathIndex = 0;
+        this.pathSpeed = speed;
+        this.pathVector = new Phaser.Math.Vector2();
+
+        this.path.getPoint(0, this.pathVector);
+
+        this.setPosition(this.pathVector.x, this.pathVector.y);
+    },
+
+    preUpdate: function (time, delta)
+    {
+        this.anims.update(time, delta);
+
+        this.path.getPoint(this.pathIndex, this.pathVector);
+
+        this.setPosition(this.pathVector.x, this.pathVector.y);
+
+        this.pathIndex = Phaser.Math.Wrap(this.pathIndex + this.pathSpeed, 0, 1);
+    }
+
+});
