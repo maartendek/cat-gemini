@@ -169,7 +169,7 @@ class CatGame extends Phaser.Scene {
         }
         else if (cursors.up.isDown)
         {
-            this.player.setVelocityY(0);
+            this.player.setVelocityX(0);
             this.player.setVelocityY(-160);
             this.setAnimation('jump');
         }
