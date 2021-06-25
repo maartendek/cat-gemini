@@ -63,14 +63,7 @@ class CatGame extends Phaser.Scene {
     this.physics.add.collider(this.enemies, this.player, () => {
         console.log("ouch!")
     });
-<<<<<<< HEAD
 
-    // clarity code powerups
-=======
-    // this.enemy = this.physics.add.sprite(200, 150, 'cat-sit');
-    // this.enemy.setCollideWorldBounds(true);
-    // this.physics.add.collider(this.enemy, this.platforms);
->>>>>>> 64804f612d87686e9c7d38f493ab3732a74af04e
     this.clarityCodes = this.physics.add.group({ allowGravity: false });
     this.clarityCodes.add(new ClarityCode(this, 350, 100, 100, 100, 0.005), true);
     this.clarityCodes.add(new ClarityCode(this, 600, 200, 40, 100, 0.005), true);
