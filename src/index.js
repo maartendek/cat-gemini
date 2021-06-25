@@ -47,27 +47,34 @@ class CatGame extends Phaser.Scene {
 
     this.cameras.main.startFollow(this.player, true);
 
+    this.enemies = this.physics.add.group();
+    this.physics.add.collider(this.enemies, this.platforms);
 
-    this.enemy = this.physics.add.sprite(200, 150, 'cat-sit');
-    this.enemy.setCollideWorldBounds(true);
-    this.physics.add.collider(this.enemy, this.platforms);
+    this.enemies.create(200, 150, 'cat-sit');
+    this.enemies.create(200, 20, 'cat-sit');
+
+    // this.enemy = this.physics.add.sprite(200, 150, 'cat-sit');
+    // this.enemy.setCollideWorldBounds(true);
+    // this.physics.add.collider(this.enemy, this.platforms);
   }
 
   update() {
     const cursors = this.input.keyboard.createCursorKeys();
 
-    // see if enemy and player within 400px of each other
-    
+    this.enemies.children.each(enemy => {
         // if player to left of enemy AND enemy moving to right (or not moving)
-        if (600 <= this.enemy.x && this.enemy.body.velocity.x >= 0) {
+        if (550 <= enemy.x && enemy.body.velocity.x >= 0) {
             // move enemy to left
-            this.enemy.body.velocity.x = -150;
+            enemy.body.velocity.x = -150;
         }
         // if player to right of enemy AND enemy moving to left (or not moving)
-        else if (250 >= this.enemy.x && this.enemy.body.velocity.x <= 0) {
+        else if (250 >= enemy.x && enemy.body.velocity.x <= 0) {
             // move enemy to right
-            this.enemy.body.velocity.x = 150;
+            enemy.body.velocity.x = 150;
         }
+    })
+    
+    
 
 
     if (this.moveCam) {
