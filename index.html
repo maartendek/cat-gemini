@@ -60,6 +60,34 @@ table {
 	border-spacing: 0;
 }
 
+.start-screen {
+  position: absolute;
+  width: 100vw;
+  background-color: aqua;
+  height: 100vh;
+  cursor: pointer;
+  // display: none;
+}
+.start-screen h1 {
+  font-size: 50px;
+  margin: 100px auto;
+  display: block;
+  text-align: center;
+}
+.death-screen {
+  position: absolute;
+  width: 100vw;
+  background-color: red;
+  height: 100vh;
+  display: none;
+}
+.death-screen h1 {
+  font-size: 50px;
+  margin: 100px auto;
+  display: block;
+  text-align: center;
+
+
 @font-face {
   font-family: 'BebasNeue-Regular';
   src: url('./src/assets/BebasNeue-Regular.ttf');
@@ -67,5 +95,7 @@ table {
     </style>
   </head>
   <body>
+    <div class="start-screen"><h1>Play Cat-Gemini!</h1></div>
+    <div class="death-screen"><h1>You died!</h1></div>
   </body>
 </html>

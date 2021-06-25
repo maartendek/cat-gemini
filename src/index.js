@@ -130,7 +130,10 @@ class CatGame extends Phaser.Scene {
         if (!this.hurt) {
         console.log("OUCH");
         this.lives--;
-        this.livesText.setText(`lives: ${this.lives}`);
+        if (this.lives < 1) {
+            document.querySelector(".death-screen").style.display = "block";
+        }
+        this.livesText.setText(`lives: ${Math.max(0,this.lives)}`);
         this.hurt = true;
         setTimeout(() => {
             this.hurt = false;
@@ -220,7 +223,7 @@ const config = {
 
 var moveCam = false;
 
-const game = new Phaser.Game(config);
+
 
 // Clarity Code Powerup
 var ClarityCode = new Phaser.Class({
@@ -265,3 +268,11 @@ var Enemy = new Phaser.Class({
         }
     }
 });
+
+const start = document.querySelector(".start-screen");
+
+start.addEventListener("click", () => {
+    console.log("start the game");
+    start.style.display = "none";
+    const game = new Phaser.Game(config);
+})
