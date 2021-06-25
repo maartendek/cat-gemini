@@ -47,23 +47,20 @@ class CatGame extends Phaser.Scene {
 
     this.cameras.main.startFollow(this.player, true);
 
-    this.enemies = this.physics.add.group();
+    // enemies
+    this.enemies = this.physics.add.group({ allowGravity: true });
+    // this.enemies.create(550, 20, 'cat-sit');
+    // this.enemies.create(200, 250, 'cat-sit');
+
+    this.enemies.add(new Enemy(this, 550, 20, 0.005), true);
+    this.enemies.add(new Enemy(this, 200, 250, 0.005), true);
     this.physics.add.collider(this.enemies, this.platforms);
-
-    this.enemies.create(550, 20, 'cat-sit');
-    this.enemies.create(200, 250, 'cat-sit');
-
     this.physics.add.collider(this.enemies, this.player, () => {
         console.log("ouch!")
     });
 
-
+    // clarity code powerups
     this.clarityCodes = this.physics.add.group({ allowGravity: false });
-
-    //  x, y = center of the path
-    //  width, height = size of the elliptical path
-    //  speed = speed the sprite moves along the path per frame
-
     this.clarityCodes.add(new ClarityCode(this, 350, 100, 100, 100, 0.005), true);
     this.clarityCodes.add(new ClarityCode(this, 600, 200, 40, 100, 0.005), true);
     this.clarityCodes.add(new ClarityCode(this, 700, 200, 40, 100, -0.005), true);
@@ -77,19 +74,19 @@ class CatGame extends Phaser.Scene {
   update() {
     const cursors = this.input.keyboard.createCursorKeys();
 
-    this.enemies.children.each(enemy => {
+    // this.enemies.children.each(enemy => {
         
-        // if player to left of enemy AND enemy moving to right (or not moving)
-        if (550 <= enemy.x && enemy.body.velocity.x >= 0) {
-            // move enemy to left
-            enemy.body.velocity.x = -150;
-        }
-        // if player to right of enemy AND enemy moving to left (or not moving)
-        else if (250 >= enemy.x && enemy.body.velocity.x <= 0) {
-            // move enemy to right
-            enemy.body.velocity.x = 150;
-        }
-    })
+    //     // if player to left of enemy AND enemy moving to right (or not moving)
+    //     if (550 <= enemy.x && enemy.body.velocity.x >= 0) {
+    //         // move enemy to left
+    //         enemy.body.velocity.x = -150;
+    //     }
+    //     // if player to right of enemy AND enemy moving to left (or not moving)
+    //     else if (250 >= enemy.x && enemy.body.velocity.x <= 0) {
+    //         // move enemy to right
+    //         enemy.body.velocity.x = 150;
+    //     }
+    // })
     
     
 
@@ -149,15 +146,10 @@ var moveCam = false;
 
 const game = new Phaser.Game(config);
 
-
+// Clarity Code Powerup
 var ClarityCode = new Phaser.Class({
-
     Extends: Phaser.Physics.Arcade.Sprite,
-
-    initialize:
-
-    function ClarityCode (scene, x, y, width, height, speed)
-    {
+    initialize: function ClarityCode (scene, x, y, width, height, speed) {
         Phaser.Physics.Arcade.Sprite.call(this, scene, x, y, 'cat-sit');
 
         //  This is the path the sprite will follow
@@ -170,16 +162,31 @@ var ClarityCode = new Phaser.Class({
 
         this.setPosition(this.pathVector.x, this.pathVector.y);
     },
-
-    preUpdate: function (time, delta)
-    {
+    preUpdate: function (time, delta) {
         this.anims.update(time, delta);
-
         this.path.getPoint(this.pathIndex, this.pathVector);
-
         this.setPosition(this.pathVector.x, this.pathVector.y);
-
         this.pathIndex = Phaser.Math.Wrap(this.pathIndex + this.pathSpeed, 0, 1);
     }
+});
 
+// Enemy
+var Enemy = new Phaser.Class({
+    Extends: Phaser.Physics.Arcade.Sprite,
+    initialize: function ClarityCode (scene, x, y, speed) {
+        Phaser.Physics.Arcade.Sprite.call(this, scene, x, y, 'cat-sit');
+
+    },
+    preUpdate: function (t, d) {
+         // if player to left of enemy AND enemy moving to right (or not moving)
+         if (550 <= this.x && this.body.velocity.x >= 0) {
+            // move enemy to left
+            this.body.velocity.x = -150;
+        }
+        // if player to right of enemy AND enemy moving to left (or not moving)
+        else if (250 >= this.x && this.body.velocity.x <= 0) {
+            // move enemy to right
+            this.body.velocity.x = 150;
+        }
+    }
 });
