@@ -18,6 +18,22 @@ class CatGame extends Phaser.Scene {
     this.oldAnimation = '';
   }
 
+
+  init ()
+  {
+      //  Inject our CSS
+      const element = document.createElement('style');
+  
+      document.head.appendChild(element);
+  
+      const sheet = element.sheet;
+  
+      const styles = '@font-face { font-family: "bebasNeue"; src: url("assets/BebasNeue-Regular.ttf") format("truetype"); }\n';
+  
+      sheet.insertRule(styles, 0);
+ 
+  }
+
   preload() {
     this.gameWidth = this.screenSize * this.screenWidth;
     this.load.image("bg", bgImage);
@@ -26,6 +42,9 @@ class CatGame extends Phaser.Scene {
     this.load.image('ground', groundImage);
     this.load.image('platform', platformImage);
     this.load.image('clarity', clarityImage);
+
+    this.load.script('webfont', 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js');
+    
   }
 
   create() {
@@ -106,7 +125,7 @@ class CatGame extends Phaser.Scene {
 
     // lives left
     this.lives = 8;
-    this.livesText = this.add.text(16, 16, `lives: ${this.lives}`, { fontSize: '32px', fill: '#000' });
+    this.livesText = this.add.text(16, 16, `lives: ${this.lives}`, { fontSize: '32px', fontFamily: 'bebasNeue', fill: '#000' });
     this.removeLife = () => {
         if (!this.hurt) {
         console.log("OUCH");
