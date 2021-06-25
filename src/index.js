@@ -81,6 +81,17 @@ class CatGame extends Phaser.Scene {
     
     this.message = this.add.text(150, 200, "Gefeliciteerd uren code opgepakt!", { font: "30px Arial", fill: "#ff0044",align: "center" }).setVisible(false);
     this.message.setStroke('#000', 16);
+
+    this.add.image(0, 0, 'cat-walk', '__BASE').setOrigin(0, 0);
+    this.anims.create({
+      key: 'walk',
+      frames: this.anims.generateFrameNumbers('cat-walk', { frames: [ 0, 1, 2, 3 ] }),
+      frameRate: 8,
+      repeat: -1
+    });
+    const cat = this.add.sprite(600, 370);
+    cat.play('walk');
+
   }
   
   showMessage() {
