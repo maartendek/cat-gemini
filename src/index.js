@@ -9,7 +9,7 @@ import clarityImage from "./assets/clarity_k52.png";
 class CatGame extends Phaser.Scene {
   constructor() {
     super();
-    this.lives = 9;
+    this.lives;
     this.moveCam = false;
     this.screenWidth = 552;
     this.screenSize = 4;
@@ -70,8 +70,7 @@ class CatGame extends Phaser.Scene {
     this.physics.add.collider(this.enemies, this.platforms);
 
     this.physics.add.collider(this.enemies, this.player, () => {
-        this.lives;
-        console.log("ouch!")
+        this.removeLife()
     });
 
     // clarity code powerups
@@ -95,7 +94,19 @@ class CatGame extends Phaser.Scene {
     
 
     // lives left
+    this.lives = 8;
     this.livesText = this.add.text(16, 16, `lives: ${this.lives}`, { fontSize: '32px', fill: '#000' });
+    this.removeLife = () => {
+        if (!this.hurt) {
+        console.log("OUCH");
+        this.lives--;
+        this.livesText.setText(`lives: ${this.lives}`);
+        this.hurt = true;
+        setTimeout(() => {
+            this.hurt = false;
+        }, 1000);
+        }
+    }
   }
   
   showMessage() {
