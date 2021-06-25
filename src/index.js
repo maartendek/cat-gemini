@@ -101,17 +101,17 @@ class CatGame extends Phaser.Scene {
           this.hideMessage();
         }, 3000);
     }, null, this);
-    
-    this.message = this.add.text(150, 200, "Gefeliciteerd uren code opgepakt!", { font: "30px Arial", fill: "#ff0044",align: "center" }).setVisible(false);
-    this.message.setFontFamily("BebasNeueRegular");
-    this.message.setStroke('#000', 16);
 
-    
+    this.message = this.add.text(150, 200, "Gefeliciteerd uren code opgepakt!", { font: "30px Arial", fill: "#19709B",align: "center" }).setVisible(false);
+    this.message.setFontFamily("BebasNeueRegular");
+    this.message.setStroke('#135677', 0);
+
 
     // lives left
-    this.lives = 8;
-    this.livesText = this.add.text(16, 16, `lives: ${this.lives}`, { fontSize: '32px', fill: '#000', fontFamily: "BebasNeueRegular" });
+    this.lives = 9;
+    this.livesText = this.add.text(16, 16, `lives: ${this.lives}`, { fontSize: '32px', fill: '#135677', fontFamily: "BebasNeueRegular" });
     this.livesText.setFontFamily("BebasNeueRegular");
+
     this.removeLife = () => {
         if (!this.hurt) {
         console.log("OUCH");
