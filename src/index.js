@@ -49,6 +49,16 @@ class CatGame extends Phaser.Scene {
 
     this.cameras.main.startFollow(this.player, true);
 
+
+    var graphics = this.add.circle(40, 393 - 30, 30, 0x880000);
+    graphics.setInteractive().on("pointerdown", () => {
+        console.log("JUMP");
+        this.moveCam = true;
+        console.log("player x = ", this.player.x, " | gamewidth = ", this.gameWidth)
+        this.player.setVelocityY(-250);
+    });
+
+
     // enemies
     this.enemies = this.physics.add.group({ allowGravity: true });
     this.enemies.add(new Enemy(this, 550, 20, 0.005), true);
@@ -166,9 +176,7 @@ var ClarityCode = new Phaser.Class({
         this.pathIndex = 0;
         this.pathSpeed = speed;
         this.pathVector = new Phaser.Math.Vector2();
-
         this.path.getPoint(0, this.pathVector);
-
         this.setPosition(this.pathVector.x, this.pathVector.y);
     },
     preUpdate: function (time, delta) {
