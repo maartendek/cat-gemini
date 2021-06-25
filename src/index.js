@@ -50,6 +50,7 @@ class CatGame extends Phaser.Scene {
       frameRate: 8,
       repeat: -1
     });
+
     this.anims.create({
       key: 'jump',
       frames: this.anims.generateFrameNumbers('cat-walk', { frames: [ 0, 1, 2, 3 ] }),
@@ -62,6 +63,16 @@ class CatGame extends Phaser.Scene {
     this.physics.add.collider(this.player, this.platforms);
 
     this.cameras.main.startFollow(this.player, true);
+
+
+    var graphics = this.add.circle(40, 393 - 30, 30, 0x880000);
+    graphics.setInteractive().on("pointerdown", () => {
+        console.log("JUMP");
+        this.moveCam = true;
+        console.log("player x = ", this.player.x, " | gamewidth = ", this.gameWidth)
+        this.player.setVelocityY(-250);
+    });
+
 
     // enemies
     this.enemies = this.physics.add.group({ allowGravity: true });
@@ -120,10 +131,10 @@ class CatGame extends Phaser.Scene {
   setAnimation(animation) {
     if (this.oldAnimation === animation) return;
     this.oldAnimation = animation;
-
-    if(!this.animating){
+    if(animation === 'stop'){
+      this.player.stop();
+    } else {
       this.player.play(animation);
-      this.animating = true;
     }
   }
 
@@ -163,7 +174,8 @@ class CatGame extends Phaser.Scene {
             this.setAnimation('jump');
         }
         else {
-            // this.player.setVelocity(0);
+          this.player.setVelocityX(0);
+          this.setAnimation('stop');
         }
      }
   }
@@ -204,7 +216,6 @@ var ClarityCode = new Phaser.Class({
         this.pathVector = new Phaser.Math.Vector2();
         this.scale = 0.5;
         this.path.getPoint(0, this.pathVector);
-
         this.setPosition(this.pathVector.x, this.pathVector.y);
     },
     preUpdate: function (time, delta) {
