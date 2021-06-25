@@ -118,6 +118,7 @@ class CatGame extends Phaser.Scene {
     if (this.moveCam) {
         this.player.setVelocityX(80);
     }
+
     this.player.setInteractive().on("pointerdown", () => {
         // star cat moving 
         this.moveCam = true;
@@ -130,16 +131,18 @@ class CatGame extends Phaser.Scene {
         {
             this.player.setVelocityX(0);
             this.player.setVelocityX(-160);
+            this.player.setScale(-0.5, 0.5);
             this.setAnimation('walk');
-          }
-          else if (cursors.right.isDown)
-          {
+        }
+    else if (cursors.right.isDown)
+        {
             this.player.setVelocityX(0);
             this.player.setVelocityX(160);
+            this.player.setScale(0.5, 0.5);
             this.setAnimation('walk');
-          }
-          else if (cursors.up.isDown)
-          {
+        }
+        else if (cursors.up.isDown)
+        {
             this.player.setVelocityY(0);
             this.player.setVelocityY(-160);
             this.setAnimation('jump');
@@ -184,7 +187,7 @@ var ClarityCode = new Phaser.Class({
         this.pathIndex = 0;
         this.pathSpeed = speed;
         this.pathVector = new Phaser.Math.Vector2();
-
+        this.scale = 0.5;
         this.path.getPoint(0, this.pathVector);
 
         this.setPosition(this.pathVector.x, this.pathVector.y);
