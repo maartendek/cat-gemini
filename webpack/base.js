@@ -41,7 +41,8 @@ module.exports = {
         patterns: [
             { from: 'pwa' },
             { from: 'manifest.webmanifest' },
-            { from: 'src/assets/BebasNeue-Regular.ttf' }
+            { from: 'src/assets/BebasNeue-Regular.ttf' },
+            { from: 'src/assets/bg.png' }
         ]
     })
   ]
